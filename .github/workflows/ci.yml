@@ -1,0 +1,64 @@
+name: API Tests CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      BASE_URL: http://localhost:3000
+      EXTERNAL_API_URL: https://fakerestapi.azurewebsites.net/api/v1
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Clean allure-results
+        run: rm -rf reports/allure-results/*
+             rm -rf reports/allure-report/*
+
+#      - name: Copy Allure categories.json
+#        run: cp config/categories.json reports/allure-results/categories.json
+
+      - name: Run tests
+        run: |
+          pytest --alluredir=reports/allure-results
+
+      - name: Load .env variables
+        run: |
+          export $(grep -v '^#' .env | xargs)
+          echo "BASE_URL=$BASE_URL" >> $GITHUB_ENV
+          echo "EXTERNAL_API_URL=$EXTERNAL_API_URL" >> $GITHUB_ENV
+
+      - name: Generate environment.properties for Allure
+        run: |
+          echo "ENVIRONMENT=github-ci" > reports/allure-results/environment.properties
+          echo "BASE_URL=${{ env.BASE_URL }}" >> reports/allure-results/environment.properties
+          echo "EXTERNAL_API_URL=${{ env.EXTERNAL_API_URL }}" >> reports/allure-results/environment.properties
+          echo "PYTHON_VERSION=$(python --version 2>&1)" >> reports/allure-results/environment.properties
+          echo "RUNNER_OS=${RUNNER_OS}" >> reports/allure-results/environment.properties      
+
+      - name: Upload Allure History
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-history
+          path: reports/allure-report/history
+
+      - name: Upload Allure results
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-results
+          path: reports/allure-results
+
+      - name: Cleanup test books
+        run: python utils/clean_up_test_books.py

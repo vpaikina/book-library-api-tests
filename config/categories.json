@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Network/Connection Issues",
+    "matchedStatuses": ["broken"],
+    "messageRegex": "ConnectionError|Connection refused|Timeout|Network is unreachable"
+  },
+  {
+    "name": "Authentication Errors",
+    "matchedStatuses": ["failed"],
+    "messageRegex": "401|403|Unauthorized|Forbidden"
+  },
+  {
+    "name": "Resource Not Found",
+    "matchedStatuses": ["failed"],
+    "messageRegex": "404|Not Found"
+  },
+  {
+    "name": "Unexpected Server Error",
+    "matchedStatuses": ["failed", "broken"],
+    "messageRegex": "500|Internal Server Error"
+  },
+  {
+    "name": "Schema mismatch",
+    "matchedStatuses": ["failed"],
+    "messageRegex": "400|AssertionError"
+  },
+  {
+    "name": "Validation errors",
+    "matchedStatuses": ["failed"],
+    "messageRegex": "AssertionError",
+    "traceRegex": "AssertionError"
+  },
+  {
+    "name": "Other/Unknown Errors",
+    "matchedStatuses": ["failed", "broken"],
+    "messageRegex": ".*"
+  }
+]
