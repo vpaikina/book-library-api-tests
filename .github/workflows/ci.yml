@@ -23,8 +23,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Install docker-compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install docker-compose-plugin
+      
       - name: Start json-server
-        run: docker-compose up -d
+        run: docker compose up -d
 
       - name: Clean allure-results
         run: rm -rf reports/allure-results/*
@@ -76,3 +81,7 @@ jobs:
 
       - name: Cleanup test books
         run: python utils/clean_up_test_books.py
+
+      - name: Stop json-server
+        if: always()
+        run: docker compose down
