@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -73,13 +73,13 @@ jobs:
           echo "RUNNER_OS=${RUNNER_OS}" >> reports/allure-results/environment.properties      
 
       - name: Upload Allure History
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: allure-history
           path: reports/allure-report/history
 
       - name: Upload Allure results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: allure-results
           path: reports/allure-results
