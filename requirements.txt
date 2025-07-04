@@ -8,3 +8,4 @@ pytest-rerunfailures
 jsonschema
 python-dotenv
 pytest-mock
+json-server

@@ -9,6 +9,19 @@ jobs:
       BASE_URL: http://localhost:3000
       EXTERNAL_API_URL: https://fakerestapi.azurewebsites.net/api/v1
 
+    services:
+      json-server:
+        image: clue/json-server
+        ports:
+          - 3000:80
+        options: >-
+          --health-cmd "curl -f http://localhost:80 || exit 1"
+          --health-interval 5s
+          --health-timeout 2s
+          --health-retries 10
+        volumes:
+          - ./db.json:/data/db.json
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -29,6 +42,17 @@ jobs:
 
 #      - name: Copy Allure categories.json
 #        run: cp config/categories.json reports/allure-results/categories.json
+
+      - name: Wait for json-server
+        run: |
+          for i in {1..20}; do
+            if curl -s http://localhost:3000 > /dev/null; then
+              echo "json-server is up!"
+              break
+            fi
+            echo "Waiting for json-server..."
+            sleep 2
+          done
 
       - name: Run tests
         run: |
