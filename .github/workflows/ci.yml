@@ -23,6 +23,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Install Allure
+        run: |
+          sudo apt-add-repository ppa:qameta/allure -y
+          sudo apt-get update
+          sudo apt-get install allure -y
+
       - name: Install Docker Compose plugin
         run: |
           sudo apt-get update
@@ -92,6 +98,18 @@ jobs:
         run: |
           export PYTHONPATH=.
           python utils/clean_up_test_books.py
+
+      - name: Generate Allure HTML report
+        run: |
+          allure generate reports/allure-results --clean -o reports/allure-report
+
+      - name: Publish Allure Report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./reports/allure-report
+          publish_branch: gh-pages
+          force_orphan: true
 
       - name: Stop json-server
         if: always()
