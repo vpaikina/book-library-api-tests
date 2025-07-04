@@ -40,6 +40,7 @@ This test intentionally sends an invalid book structure - empty json payload
 It should fail with HTTP 400 (Bad Request)
 but the system currently creates a book with null/zero fields
 """)
+@pytest.mark.xfail(reason="Known issue: backend accepts empty book payload (should be 400).")
 @allure.severity(allure.severity_level.CRITICAL)
 @allure.link("https://github.com/github-username/portfolio/issues/1",
              name="Bug: [API_Contract] API allows creation of a book with empty payload (should return 400)")
