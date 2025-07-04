@@ -6,6 +6,11 @@ services:
     volumes:
       - ./db.json:/data/db.json
     command: -H 0.0.0.0 /data/db.json
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost/" ]
+      interval: 3s
+      timeout: 3s
+      retries: 5
 
   swagger-ui:
     image: swaggerapi/swagger-ui

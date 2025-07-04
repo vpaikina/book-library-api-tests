@@ -9,25 +9,12 @@ jobs:
       BASE_URL: http://localhost:3000
       EXTERNAL_API_URL: https://fakerestapi.azurewebsites.net/api/v1
 
-    services:
-      json-server:
-        image: clue/json-server
-        ports:
-          - 3000:80
-        options: >-
-          --health-cmd "curl -f http://localhost:80 || exit 1"
-          --health-interval 5s
-          --health-timeout 2s
-          --health-retries 10
-        volumes:
-          - ./db.json:/data/db.json
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -35,6 +22,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+      - name: Start json-server
+        run: docker-compose up -d
 
       - name: Clean allure-results
         run: rm -rf reports/allure-results/*
