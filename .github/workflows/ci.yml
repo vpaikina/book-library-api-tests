@@ -89,7 +89,9 @@ jobs:
           path: reports/allure-results
 
       - name: Cleanup test books
-        run: python utils/clean_up_test_books.py
+        run: |
+          export PYTHONPATH=.
+          python utils/clean_up_test_books.py
 
       - name: Stop json-server
         if: always()
