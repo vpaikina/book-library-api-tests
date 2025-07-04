@@ -23,7 +23,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Install Allure CLI (latest release)
+      - name: Install Allure CLI (latest)
         run: |
           wget https://github.com/allure-framework/allure2/releases/download/2.27.0/allure-2.27.0.tgz
           tar -xzf allure-2.27.0.tgz
@@ -48,10 +48,20 @@ jobs:
       - name: Start json-server
         run: docker compose up -d
 
-      - name: Clean allure-results
-        run: rm -rf reports/allure-results/*
-             rm -rf reports/allure-report/*
 
+      - name: Clean old Allure results
+        run: |
+          rm -rf reports/allure-results/*
+          rm -rf reports/allure-report/*
+
+      - name: Load previous Allure history (optional)
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-history
+          path: reports/allure-results/history
+        continue-on-error: true
+
+#
 #      - name: Copy Allure categories.json
 #        run: cp config/categories.json reports/allure-results/categories.json
 
@@ -84,35 +94,26 @@ jobs:
           echo "PYTHON_VERSION=$(python --version 2>&1)" >> reports/allure-results/environment.properties
           echo "RUNNER_OS=${RUNNER_OS}" >> reports/allure-results/environment.properties      
 
-      - name: Upload Allure History
+      - name: Generate Allure report
+        run: |
+          allure generate reports/allure-results --clean -o reports/allure-report
+
+      - name: Save Allure report as artifact (with index.html)
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: reports/allure-report
+
+      - name: Save Allure history for trend
         uses: actions/upload-artifact@v4
         with:
           name: allure-history
           path: reports/allure-report/history
 
-      - name: Upload Allure results
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-results
-          path: reports/allure-results
-
       - name: Cleanup test books
         run: |
           export PYTHONPATH=.
           python utils/clean_up_test_books.py
-
-      - name: Generate Allure HTML report
-        run: |
-          allure generate reports/allure-results --clean -o reports/allure-report
-
-      - name: Publish Allure Report to GitHub Pages
-        if: github.ref == 'refs/heads/main'
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./reports/allure-report
-          publish_branch: gh-pages
-          force_orphan: true
 
       - name: Stop json-server
         if: always()
