@@ -48,18 +48,17 @@ jobs:
       - name: Start json-server
         run: docker compose up -d
 
-
-      - name: Clean old Allure results
-        run: |
-          rm -rf reports/allure-results/*
-          rm -rf reports/allure-report/*
-
       - name: Load previous Allure history
         uses: actions/download-artifact@v4
         with:
           name: allure-history
           path: reports/allure-results/history
         continue-on-error: true
+
+      - name: Clean old Allure results
+        run: |
+          rm -rf reports/allure-results/*
+          rm -rf reports/allure-report/*
 
 #      - name: Copy Allure categories.json
 #        run: cp config/categories.json reports/allure-results/categories.json
