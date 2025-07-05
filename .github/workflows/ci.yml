@@ -77,7 +77,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest --alluredir=reports/allure-results
+          pytest tests --alluredir=reports/allure-results
 
       - name: Load .env variables
         run: |
