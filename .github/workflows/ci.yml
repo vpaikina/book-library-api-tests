@@ -54,7 +54,7 @@ jobs:
           rm -rf reports/allure-results/*
           rm -rf reports/allure-report/*
 
-      - name: Load previous Allure history (optional)
+      - name: Load previous Allure history
         uses: actions/download-artifact@v4
         with:
           name: allure-history
@@ -77,7 +77,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest tests --alluredir=reports/allure-results
+          pytest --alluredir=reports/allure-results
 
       - name: Load .env variables
         run: |
@@ -97,17 +97,17 @@ jobs:
         run: |
           allure generate reports/allure-results --clean -o reports/allure-report
 
-      - name: Save Allure report as artifact (with index.html)
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-report
-          path: reports/allure-report
-
       - name: Save Allure history for trend
         uses: actions/upload-artifact@v4
         with:
           name: allure-history
           path: reports/allure-report/history
+
+      - name: Save Allure report as artifact (with index.html)
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: reports/allure-report
 
       - name: Cleanup test books
         run: |
