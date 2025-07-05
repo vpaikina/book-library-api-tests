@@ -61,7 +61,6 @@ jobs:
           path: reports/allure-results/history
         continue-on-error: true
 
-#
 #      - name: Copy Allure categories.json
 #        run: cp config/categories.json reports/allure-results/categories.json
 
