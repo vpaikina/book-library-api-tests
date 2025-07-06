@@ -1,6 +1,9 @@
 name: API Tests CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
 
 jobs:
   test:
@@ -30,6 +33,10 @@ jobs:
           sudo mv allure-2.27.0 /opt/allure
           sudo ln -s /opt/allure/bin/allure /usr/bin/allure
           allure --version
+
+      #- name: Install Allure CLI
+      #  run: |
+      #    sudo npm install -g allure-commandline
 
       - name: Install Docker Compose plugin
         run: |
@@ -74,6 +81,10 @@ jobs:
             echo "Waiting for json-server..."
             sleep 2
           done
+          if [ $i -eq 20 ]; then
+          echo "json-server did not start in time"
+          exit 1
+          fi
 
       - name: Run tests
         run: |
@@ -93,21 +104,49 @@ jobs:
           echo "PYTHON_VERSION=$(python --version 2>&1)" >> reports/allure-results/environment.properties
           echo "RUNNER_OS=${RUNNER_OS}" >> reports/allure-results/environment.properties      
 
+  #    - name: Download Allure history
+  #      uses: actions/checkout@v4
+  #      if: always()
+  #      continue-on-error: true
+  #      with:
+  #        ref: gh-pages
+  #        path: gh-pages
+
+  #    - name: Copy previous history to results
+  #      run: |
+  #        if [ -d gh-pages/history ]; then
+  #          cp -r gh-pages/history reports/allure-results/history
+  #        fi
+
       - name: Generate Allure report
         run: |
           allure generate reports/allure-results --clean -o reports/allure-report
 
-      - name: Save Allure history for trend
+      - name: Save Allure history for next run
+        run: |
+          mkdir -p allure-history
+          cp -r reports/allure-report/history allure-history/
+
+      - name: Upload Allure history as artifact
         uses: actions/upload-artifact@v4
         with:
           name: allure-history
           path: reports/allure-report/history
 
-      - name: Save Allure report as artifact (with index.html)
+      - name: Upload Allure report as artifact
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: reports/allure-report
+
+  #    - name: Deploy report to GitHub Pages
+  #      if: github.ref == 'refs/heads/main'
+  #      uses: peaceiris/actions-gh-pages@v4
+  #      with:
+  #        github_token: ${{ secrets.GITHUB_TOKEN }}
+  #        publish_dir: ./allure-report
+  #        publish_branch: gh-pages
+  #        keep_files: true
 
       - name: Cleanup test books
         run: |
