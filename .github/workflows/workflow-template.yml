@@ -62,6 +62,9 @@ jobs:
           find reports/allure-results -type f ! -path "reports/allure-results/history/*" -delete || true
           find reports/allure-results -type d -empty -delete || true
 
+      - name: Ensure allure-results exists
+        run: mkdir -p reports/allure-results
+
       - name: Copy Allure categories.json
         run: cp config/categories.json reports/allure-results/categories.json
 
