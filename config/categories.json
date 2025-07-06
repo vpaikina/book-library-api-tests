@@ -1,17 +1,17 @@
 [
   {
     "name": "Network/Connection Issues",
-    "matchedStatuses": ["broken"],
-    "messageRegex": "ConnectionError|Connection refused|Timeout|Network is unreachable"
+    "matchedStatuses": ["broken", "failed"],
+    "messageRegex": "ConnectionError|Connection refused|Timeout|Network is unreachable|Read timed out"
   },
   {
     "name": "Authentication Errors",
-    "matchedStatuses": ["failed"],
+    "matchedStatuses": ["failed", "broken"],
     "messageRegex": "401|403|Unauthorized|Forbidden"
   },
   {
     "name": "Resource Not Found",
-    "matchedStatuses": ["failed"],
+    "matchedStatuses": ["failed", "broken"],
     "messageRegex": "404|Not Found"
   },
   {
@@ -21,14 +21,13 @@
   },
   {
     "name": "Schema mismatch",
-    "matchedStatuses": ["failed"],
-    "messageRegex": "400|AssertionError"
+    "matchedStatuses": ["failed", "broken"],
+    "messageRegex": "SchemaError|schema mismatch|ValidationError"
   },
   {
     "name": "Validation errors",
-    "matchedStatuses": ["failed"],
-    "messageRegex": "AssertionError",
-    "traceRegex": "AssertionError"
+    "matchedStatuses": ["failed", "broken"],
+    "messageRegex": "AssertionError|validation failed"
   },
   {
     "name": "Other/Unknown Errors",
