@@ -97,13 +97,25 @@ jobs:
     #      echo "BASE_URL=$BASE_URL" >> $GITHUB_ENV
     #      echo "EXTERNAL_API_URL=$EXTERNAL_API_URL" >> $GITHUB_ENV
 
-      - name: Generate environment.properties for Allure
+    #  - name: Generate environment.properties for Allure
+    #    run: |
+    #      echo "ENVIRONMENT=github-ci" > reports/allure-results/environment.properties
+    #      echo "BASE_URL=${{ env.BASE_URL }}" >> reports/allure-results/environment.properties
+    #      echo "EXTERNAL_API_URL=${{ env.EXTERNAL_API_URL }}" >> reports/allure-results/environment.properties
+    #      echo "PYTHON_VERSION=$(python --version 2>&1)" >> reports/allure-results/environment.properties
+    #      echo "RUNNER_OS=${RUNNER_OS}" >> reports/allure-results/environment.properties
+
+      - name: Generate Allure environment.properties
         run: |
-          echo "ENVIRONMENT=github-ci" > reports/allure-results/environment.properties
-          echo "BASE_URL=${{ env.BASE_URL }}" >> reports/allure-results/environment.properties
-          echo "EXTERNAL_API_URL=${{ env.EXTERNAL_API_URL }}" >> reports/allure-results/environment.properties
-          echo "PYTHON_VERSION=$(python --version 2>&1)" >> reports/allure-results/environment.properties
-          echo "RUNNER_OS=${RUNNER_OS}" >> reports/allure-results/environment.properties      
+          cat <<EOF > reports/allure-results/environment.properties
+          ENVIRONMENT=github-ci
+          BASE_URL=${BASE_URL}
+          EXTERNAL_API_URL=${EXTERNAL_API_URL}
+          PYTHON_VERSION=$(python --version 2>&1)
+          RUNNER_OS=${RUNNER_OS}
+          GITHUB_SHA=${GITHUB_SHA}
+          GITHUB_RUN_NUMBER=${GITHUB_RUN_NUMBER}
+          EOF
 
       - name: Generate Allure report
         run: |
