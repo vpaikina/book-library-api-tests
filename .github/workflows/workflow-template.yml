@@ -91,11 +91,11 @@ jobs:
             pytest --alluredir=reports/allure-results
           fi
 
-      - name: Load .env variables
-        run: |
-          export $(grep -v '^#' .env | xargs)
-          echo "BASE_URL=$BASE_URL" >> $GITHUB_ENV
-          echo "EXTERNAL_API_URL=$EXTERNAL_API_URL" >> $GITHUB_ENV
+    #  - name: Load .env variables
+    #    run: |
+    #      export $(grep -v '^#' .env | xargs)
+    #      echo "BASE_URL=$BASE_URL" >> $GITHUB_ENV
+    #      echo "EXTERNAL_API_URL=$EXTERNAL_API_URL" >> $GITHUB_ENV
 
       - name: Generate environment.properties for Allure
         run: |
