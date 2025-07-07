@@ -2,8 +2,8 @@
   {
     "name": "Network/Connection Issues",
     "matchedStatuses": ["broken", "failed"],
-    "messageRegex": "ConnectionError|Connection refused|Timeout|Network is unreachable|Read timed out"
-  },
+    "messageRegex": "ConnectionError|HTTPConnectionPool.*Max retries exceeded|Failed to establish a new connection|Connection refused"
+   },
   {
     "name": "Authentication Errors",
     "matchedStatuses": ["failed", "broken"],

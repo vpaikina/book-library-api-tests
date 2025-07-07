@@ -34,10 +34,10 @@ find "${RESULTS_DIR}" -type f ! -path "${RESULTS_DIR}/history/*" -delete 2>/dev/
 # Ensure results directory exists
 mkdir -p "${RESULTS_DIR}"
 
-# Copy categories.json for custom error categorization (optional)
-#if [ -f "config/categories.json" ]; then
-#  cp config/categories.json "${RESULTS_DIR}/categories.json"
-#fi
+#Copy categories.json for custom error categorization (optional)
+if [ -f "config/categories.json" ]; then
+  cp config/categories.json "${RESULTS_DIR}/categories.json"
+fi
 
 # Run pytest and output Allure results
 pytest "$@" --alluredir=${RESULTS_DIR}

@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  full-tests:
+  full-regression:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     uses: ./.github/workflows/workflow-template.yml
     with:
