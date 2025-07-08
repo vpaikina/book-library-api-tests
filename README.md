@@ -24,6 +24,5 @@ The project demonstrates QA automation proficiency in using best practices of au
 - [**utils/**](./utils) — API client, resource tracker, cleanup scripts  
 - [**schemas/**](./schemas) — Pydantic models for response validation  
 - [**tests/**](./tests) — all test cases divided by suites  
-- [**config/**](./config) — environment settings and other configs  
-- [**reports/**](./reports) — Allure results and report artifacts  
-- [**run_tests_with_trend.sh**](./run_tests_with_trend.sh) — universal launcher script
+- [**config/**](./config) — environment settings and other configs 
+- [**run_tests_with_cleanup.sh**](./run_tests_with_cleanup.sh) — universal launcher script
