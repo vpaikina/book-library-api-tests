@@ -2,8 +2,7 @@
 
 Portfolio project with REST API Automated tests for a fictional Book Library service.
 The project demonstrates QA automation proficiency in using best practices of automated API tests development (using
-Python, Pytest, Requests, Allure, GitHub Actions CI and data-driven tests).
-The tests cover real-world API e2e scenarios and are easy to understand and maintain.
+Python, Pytest, Requests, Allure, GitHub Actions CI and data-driven tests which cover real-world contract API and e2e scenarios.
 
 ## 🧰 Tech Stack
 
