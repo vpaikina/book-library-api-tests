@@ -12,6 +12,8 @@ jobs:
     with:
       artifact_name: allure-report-full
       test_marker: ""
+    permissions:
+      contents: write
 
   smoke-tests:
     if: github.event_name == 'pull_request'
@@ -19,6 +21,8 @@ jobs:
     with:
       artifact_name: allure-report-smoke
       test_marker: "smoke"
+    permissions:
+      contents: write
 
   deploy:
     needs: full-regression

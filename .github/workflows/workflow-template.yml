@@ -13,12 +13,9 @@ on:
 jobs:
   run-tests:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     env:
       BASE_URL: http://localhost:3000
       EXTERNAL_API_URL: https://fakerestapi.azurewebsites.net/api/v1
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
