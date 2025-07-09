@@ -43,7 +43,7 @@ but the system currently creates a book with null/zero fields
 @pytest.mark.xfail(reason="Known issue: backend accepts empty book payload (should be 400).")
 @allure.severity(allure.severity_level.CRITICAL)
 @allure.link("https://github.com/vpaikina/qa-portfolio/blob/main/assets/sample-bug-report.md",
-             name="Bug: [API_Contract] API allows POST /books with empty body (expected 400, got 200).")
+             name="Bug: [API_Contract] API allows POST /books with empty body (expected 400, got 200)")
 @pytest.mark.contract
 def test_post_empty_book_rejected():
     invalid_book = {}
