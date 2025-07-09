@@ -36,26 +36,25 @@ The project demonstrates QA automation proficiency in using best practices of au
 
 ## 📘 How to Use 
 
-#### **Setup**
-
-#### 1. **Clone the repository:**
+### 1. **Setup**
+**Clone the repository:**
 ```bash
   git clone https://github.com/vpaikina/book-library-api-tests.git
   cd book-library-api-tests
 ```
 
-#### 2. **Install dependencies:**
+### 2. **Install dependencies:**
 ```bash
   pip install -r requirements.txt
 ```
 
-#### 3. **Run local API with JSON Server:**
+### 3. **Run local API with JSON Server:**
 ```bash
   docker-compose up -d
 ```
 The API will be available at http://localhost:3000/books.
 
-#### 4. Running Tests
+### 4. Running Tests
 - Run all tests:
 ```bash
   pytest -v
@@ -73,7 +72,7 @@ This script will:
 - Execute all tests with data cleanup
 - Generate and open the Allure report in your default browser 
 
-#### 5. Reviewing Test Results (not needed if tests were run by run_tests_with_cleanup.sh)
+### 5. Reviewing Test Results (not needed if tests were run by run_tests_with_cleanup.sh)
 View Allure Report:
 ```bash
   allure serve allure-results
