@@ -55,3 +55,10 @@ jobs:
       - name: Deploy Allure report to GitHub Pages
         uses: actions/deploy-pages@v4
         id: deployment
+
+      - name: Add Allure Report link to job summary
+        run: |
+          echo "## 📊 [Allure Report — click to view](https://vpaikina.github.io/book-library-api-tests/)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "[![Allure Report](https://img.shields.io/badge/Allure--Report-blue?logo=allure&label=Allure%20Report)](https://vpaikina.github.io/book-library-api-tests/)" >> $GITHUB_STEP_SUMMARY
+
