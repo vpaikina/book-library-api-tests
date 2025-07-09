@@ -40,13 +40,6 @@ jobs:
           name: allure-report-full
           path: reports/allure-report
 
-      - name: Download Allure history artifact (optional)
-        uses: actions/download-artifact@v4
-        with:
-          name: allure-history
-          path: reports/allure-report/history
-        continue-on-error: true
-
       - name: Upload Allure report to GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
