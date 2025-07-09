@@ -20,13 +20,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-    #  - name: Fetch Allure history from branch
-    #    run: |
-    #      git fetch origin allure-history:allure-history || true
-    #      git checkout allure-history -- allure-history || true
-    #      mkdir -p reports/allure-report/history
-    #      cp -r allure-history/* reports/allure-report/history/ || true
-    #    continue-on-error: true
+      - name: Fetch Allure history from branch
+        run: |
+          git fetch origin allure-history:allure-history || true
+          git checkout allure-history -- allure-history || true
+          mkdir -p reports/allure-report/history
+          cp -r allure-history/* reports/allure-report/history/ || true
+        continue-on-error: true
 
       - name: Set up Python
         uses: actions/setup-python@v5
