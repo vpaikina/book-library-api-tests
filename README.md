@@ -26,6 +26,7 @@ The project demonstrates QA automation proficiency in using best practices of au
 - [**tests/**](./tests) — all test cases divided by suites  
 - [**config/**](./config) — environment settings and other configs 
 - [**run_tests_with_cleanup.sh**](./run_tests_with_cleanup.sh) — universal launcher script
+- [**docs/**](./docs) — Allure report included for demonstration purposes only
 
 ## 🗂️ Test Suites
 **The project includes four tests that automate the following scenarios:**
