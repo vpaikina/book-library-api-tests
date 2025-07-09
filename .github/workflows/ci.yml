@@ -20,3 +20,33 @@ jobs:
       artifact_name: allure-report-smoke
       test_marker: "smoke"
 
+  deploy-allure:
+    needs: full-regression
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Download Allure report artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-report-full
+          path: reports/allure-report
+
+      - name: Download Allure history artifact (optional)
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-history
+          path: reports/allure-report/history
+        continue-on-error: true
+
+      - name: Upload Allure report to GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: reports/allure-report
+
+      - name: Deploy Allure report to GitHub Pages
+        uses: actions/deploy-pages@v4
+        id: deployment
+
