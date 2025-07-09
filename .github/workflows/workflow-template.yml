@@ -13,6 +13,8 @@ on:
 jobs:
   run-tests:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       BASE_URL: http://localhost:3000
       EXTERNAL_API_URL: https://fakerestapi.azurewebsites.net/api/v1
@@ -20,6 +22,14 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+    #  - name: Fetch Allure history from branch
+    #    run: |
+    #      git fetch origin allure-history:allure-history || true
+    #      git checkout allure-history -- allure-history || true
+    #      mkdir -p reports/allure-report/history
+    #      cp -r allure-history/* reports/allure-report/history/ || true
+    #    continue-on-error: true
 
       - name: Set up Python
         uses: actions/setup-python@v5
