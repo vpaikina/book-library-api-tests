@@ -47,13 +47,6 @@ jobs:
       - name: Start json-server
         run: docker compose up -d
 
-      - name: Download Allure history (optional)
-        uses: actions/download-artifact@v4
-        with:
-          name: allure-history
-          path: reports/allure-report/history
-        continue-on-error: true
-
       - name: Clean Allure results (keep history)
         run: |
           mkdir -p reports/allure-results/history
@@ -119,12 +112,13 @@ jobs:
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "github-actions"
-          git fetch
-          git checkout -B allure-history || git checkout allure-history
+          git fetch origin allure-history:allure-history || true
+          git checkout -B allure-history origin/allure-history || git checkout -B allure-history
           mkdir -p allure-history
           cp -r reports/allure-report/history/* allure-history/ || true
           git add allure-history
           git commit -m "Update Allure history [skip ci]" || true
+          git pull --rebase origin allure-history || true
           git push origin allure-history
         continue-on-error: true
 
