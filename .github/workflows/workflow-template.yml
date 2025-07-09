@@ -56,12 +56,19 @@ jobs:
       - name: Start json-server
         run: docker compose up -d
       
-      - name: Restore Allure history (if exists)
+      - name: Download Allure history
         uses: actions/download-artifact@v4
         with:
           name: allure-history
-          path: reports/allure-results/history
+          path: reports/allure-report/history
         continue-on-error: true
+
+      - name: Clean Allure results (preserve history)
+        run: |
+          mkdir -p reports/allure-results/history
+          if [ -d reports/allure-report/history ]; then
+            cp -r reports/allure-report/history/* reports/allure-results/history || true
+          fi
 
       - name: Clean Allure results but keep history
         run: |
