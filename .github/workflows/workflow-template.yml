@@ -55,6 +55,13 @@ jobs:
 
       - name: Start json-server
         run: docker compose up -d
+      
+      - name: Restore Allure history (if exists)
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-history
+          path: reports/allure-results/history
+        continue-on-error: true
 
       - name: Clean Allure results but keep history
         run: |
@@ -91,20 +98,6 @@ jobs:
             pytest --alluredir=reports/allure-results
           fi
 
-    #  - name: Load .env variables
-    #    run: |
-    #      export $(grep -v '^#' .env | xargs)
-    #      echo "BASE_URL=$BASE_URL" >> $GITHUB_ENV
-    #      echo "EXTERNAL_API_URL=$EXTERNAL_API_URL" >> $GITHUB_ENV
-
-    #  - name: Generate environment.properties for Allure
-    #    run: |
-    #      echo "ENVIRONMENT=github-ci" > reports/allure-results/environment.properties
-    #      echo "BASE_URL=${{ env.BASE_URL }}" >> reports/allure-results/environment.properties
-    #      echo "EXTERNAL_API_URL=${{ env.EXTERNAL_API_URL }}" >> reports/allure-results/environment.properties
-    #      echo "PYTHON_VERSION=$(python --version 2>&1)" >> reports/allure-results/environment.properties
-    #      echo "RUNNER_OS=${RUNNER_OS}" >> reports/allure-results/environment.properties
-
       - name: Generate Allure environment.properties
         run: |
           cat <<EOF > reports/allure-results/environment.properties
@@ -127,14 +120,21 @@ jobs:
           name: ${{ inputs.artifact_name }}
           path: reports/allure-report
 
-  #    - name: Deploy report to GitHub Pages
-  #      if: github.ref == 'refs/heads/main'
-  #      uses: peaceiris/actions-gh-pages@v4
-  #      with:
-  #        github_token: ${{ secrets.GITHUB_TOKEN }}
-  #        publish_dir: ./allure-report
-  #        publish_branch: gh-pages
-  #        keep_files: true
+      - name: Upload Allure history for Trends
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-history
+          path: reports/allure-report/history
+
+
+      - name: Deploy Allure report to GitHub Pages
+        if: github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: reports/allure-report
+          publish_branch: gh-pages
+          destination_dir: .
 
       - name: Cleanup test books
         run: |
