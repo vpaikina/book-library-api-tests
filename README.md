@@ -28,6 +28,8 @@ The project demonstrates QA automation proficiency in using best practices of au
 - [**config/**](./config) — environment settings and other configs 
 - [**run_tests_with_cleanup.sh**](./run_tests_with_cleanup.sh) — universal launcher script
 - [**docs/**](./docs) — Allure report included for demonstration purposes only
+- [**.github/workflows**](./.github/workflows/ci.yml) — main workflow logic: triggers smoke and full regression test runs, and **runs automated code linting with flake8, black, and ruff** before executing tests.
+
 
 ## 🗂️ Test Suites
 **The project includes four tests that automate the following scenarios:**
