@@ -39,7 +39,6 @@ The project demonstrates QA automation proficiency in using best practices of au
 ### 🧹 Code Style & Linting
 
 We use [Flake8](https://flake8.pycqa.org/) for code style and linting.  
-Please run `flake8 .` before committing changes, or let CI/CD do it for you.
 
 - **Black** and **Ruff** are enforced via [pre-commit](https://pre-commit.com/).  
 - All code is automatically formatted (Black) and linted (Ruff) before commit and in CI.  
@@ -51,6 +50,7 @@ pre-commit install
 flake8 .
 black .
 ruff check . --fix
+```
 
 ## 📘 How to Use 
 
