@@ -36,7 +36,7 @@ The project demonstrates QA automation proficiency in using best practices of au
   - `test_book_crud_e2e` – End-to-end test covering book creation, reading, updating, and deletion.
   - `test_post_book_various_payloads` – Data-driven/parameterized test for creating multiple books.
 
-### 🧹 Code Style & Linting
+## 🧹 Code Style & Linting
 
 We use [Flake8](https://flake8.pycqa.org/) for code style and linting.  
 
