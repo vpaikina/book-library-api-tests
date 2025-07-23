@@ -51,6 +51,17 @@ flake8 .
 black .
 ruff check . --fix
 ```
+## 📊 Sample Allure Report
+
+Here’s an example of a live Allure report generated from the project. 
+This report demonstrates a successful run of all test cases, including detailed summaries, individual test steps, attachments, and analytics.
+
+> **Note:** One test in the suite is intentionally marked as `xfail` (“expected fail”) because of a known API [bug](./assets/sample-bug-report.md).  
+> The failing test is included on purpose to showcase real-life reporting, transparent test analysis, and advanced use of Allure features for handling unstable or problematic cases.
+
+[📁 Open Live Allure Report](https://vpaikina.github.io/book-library-api-tests/index.html)
+
+> Tip: Right-click → "Open in new tab" for better viewing in browser.
 
 ## 📘 How to Use 
 
